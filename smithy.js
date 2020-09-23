@@ -1,4 +1,4 @@
-if(!JSZip){
+if(!("JSZip" in window)){
   console.error("Smithy requires JSZip, and JSZip was not found.");
 };
 class Smithy {
@@ -96,5 +96,26 @@ class Smithy {
     this.version = p.version || [0, 0, 1];
     this.namespace = p.namespace || "smithy";
     this.icon = p.icon || null;
+  }
+}
+class Block {
+  constructor(id){
+    this.id = id;
+  }
+  
+  compile(c){
+    var bpbj = {
+      "format_version": "1.10.0",
+      "minecraft:block": {
+        "description": {
+          "identifier": c.id + ":" + this.id,
+          "is_experimental": false,
+          "register_to_creative_menu": true
+        },
+        "components": {
+        }
+      }
+    };
+    c.zip.file(c.id + "_bp/blocks/" + c.id + "/" + this.id + ".json", JSON.stringify(bpbj))};
   }
 }
